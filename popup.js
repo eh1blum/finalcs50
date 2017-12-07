@@ -30,14 +30,15 @@ chrome.tabs.query(queryInfo, (tabs) => {
 //send message to content.js to begin parsing article in the event that the 
 //extension was clicked
 chrome.tabs.query({active: true, currentWindow: true}, function (tabs){
-    console.log("extension opened");
     chrome.tabs.sendMessage(tabs[0].id, {action: "Activate"}, function (response) {
+      // Check for error
       if (chrome.runtime.lastError) {
         console.log(chrome.runtime.lastError);
       }
       else {
-        console.log(response);
-        let bias_score = score(response.data); 
+        // Set bias score and leand score to received message from content.js
+        let bias_score = score(response.data);
+        // Call bias score function 
         Display_Bias_Score_Word(bias_score);
         let lean_score = lean(response.data);
         console.log("lean_score");
@@ -46,6 +47,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function (tabs){
         Display_Political_Lean(lean_score);
         chrome.storage.sync.get('lean', function (items) {
           console.log(items.lean);
+          // Check whether user has a history of read pages
           if (!items.lean) {
             chrome.storage.sync.set({'lean': [lean_score]});
             // Notify that we saved.
@@ -110,47 +112,45 @@ function score(text){
   return bias_score;
 }
 
-//function to identify the political lean of the article
+// Function to identify the political lean of the article
 function lean(text){
 
-  //for text, interpret any non letter character besides hyphen as the end of a word
-  //javascript split to parse accordingly
+  // For text, interpret any non letter character besides hyphen as the end of a word
+  // Javascript split to parse accordingly
   let words_article = text.split(" ");
 
-  //make set of words in webpage
+  // Make set of words in webpage
   let set_article = new Set(words_article);
 
-  //text from conservative txt file: interpret new line as the end of a word
+  // Text from conservative txt file: interpret new line as the end of a word
   let words_conservative = conservative_array;
 
-  //text from liberal txt file: interpret new line as the end of a word
+  // Text from liberal txt file: interpret new line as the end of a word
   let words_liberal = liberal_array;
 
-  //make set of words in txt file
+  // Make set of words in txt file
   let set_conservative = new Set(words_conservative);
 
-  //make set of words in txt file
+  // Make set of words in txt file
   let set_liberal = new Set(words_liberal);
 
-  //find intersection between set from webpage and set of conservative words
+  // Find intersection between set from webpage and set of conservative words
   let intersection_conservative = new Set([...set_article].filter(x => set_conservative.has(x)));
   console.log("conservative words");
   console.log(intersection_conservative);
 
-  //find intersection between set from webpage and set of liberal words
+  // Find intersection between set from webpage and set of liberal words
   let intersection_liberal = new Set([...set_article].filter(x => set_liberal.has(x)));
   console.log("liberal words");
   console.log(intersection_liberal);
 
-  //count number of biased words and compare to wordcount of article, return tier underwhich ratio falls
+  // Count number of biased words and compare to wordcount of article, return tier underwhich ratio falls
   let conservative_bias = intersection_conservative.size;
   let liberal_bias = intersection_liberal.size;
   
-  console.log("conservative bias");
-  console.log(conservative_bias);
-  console.log("liberal bias");
-  console.log(liberal_bias);
-
+  // Compare number of liberal words with number of conservative words, return +1 if outcome
+  // Skews liberal, -1 if outcome skews conservative, and 0 if the numbers of conservative and
+  // Liberal words are equal
   let outcome = liberal_bias - conservative_bias;
   if(outcome > 0)
   {
@@ -168,7 +168,7 @@ function lean(text){
   }
 }
 
-
+// Display bias score within box of corresponding color
 function Display_Bias_Score_Word(bias_score){
   if (0 <= bias_score && bias_score <= 0.01)
   {
@@ -188,6 +188,7 @@ function Display_Bias_Score_Word(bias_score){
   }
 }
 
+// Display political lean within box of corresponding color
 function Display_Political_Lean(political_lean){
   if (political_lean < 0)
   {
@@ -206,6 +207,7 @@ function Display_Political_Lean(political_lean){
   }
 }
 
+// Display counts of read articles within liberal box and conservative box
 function Display_Search_History(conservative_count, liberal_count) {
   document.getElementById("conservative").innerHTML = (conservative_count);
   document.getElementById("searchhistory_conservative").style.background = "LightCoral";
