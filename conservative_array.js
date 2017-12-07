@@ -1,0 +1,2 @@
+let conservative_array = [
+"whore","anti-American","agenda","cry","baby","swamp","pro-abortion","crackpot","obamagate","yankee","anti-christian","educrat","anti-life","snowflake","bootstrap","bootstraps","illegals","alien","aliens","entitlement","entitlements","freeload","freeloader","freeloading","god-fearing","islamofascism","islamofascist","manhater","deadweight","recidivism","spend-and-tax","stagflation","un-american","unborn","ziggurat","foreknowledge","elitism","elitist","victimization","quote","promiscuous ","special"];

@@ -1,0 +1,94 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+  <head>
+    <title>Bias Metrics</title>
+    <style type="text/css">
+      body {
+        margin: 10px;
+        white-space: nowrap;
+        background-color: #F4F4F4;
+        padding-top: 10px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+      }
+      h1 {
+        font-size: 15px;
+        font-family: "Times New Roman", "Times", serif;
+        text-align: center;
+      }
+      .datatypes {
+        font-size: 13px;
+        font-weight: bold;
+        font-family: "Times New Roman", "Times", serif;
+        text-align: center;
+      }
+      .box {
+        border-color: LightSlateGrey;
+        border-style: ridge;
+        padding: 10px;
+      }
+      #biaslevel {
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      #politicallean {
+        margin-top: 10px;
+        text-align: center;
+      }
+      #searchhistory_conservative
+      {
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      #seatchhistory_liberal
+      {
+        margin-top: 10px;
+        text-align: center;
+      }
+    </style>
+
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
+    -->
+    <script src="liberal_array.js"></script>
+    <script src="conservative_array.js"></script>
+    <script src="bias_array.js"></script>
+    <script src="popup.js"></script>
+  </head>
+
+  <body>
+    <h1 style="font-size:200%;"> Bias Metrics </h1>
+    <h1>Webpage Metrics</h1>
+    <div class="box" id="biaslevel">
+      <span >Level of Bias: </span>
+      <span class="datatypes" id="bias">
+      </span> 
+    </div>
+    <div class="box" id="politicallean">
+      <span>Direction of Political Lean: </span>
+      <span class="datatypes" id="lean">
+      </span> 
+    </div>
+    <h1>Your Read History</h1>
+    <div class="box" id="searchhistory_conservative">
+      <span>Number of Conservative Articles: </span>
+      <span class="datatypes" id="conservative">
+      </span> 
+    </div>
+    <div class="box" id="searchhistory_liberal">
+      <span>Number of Liberal Articles: </span>
+      <span class="datatypes" id="liberal">
+      </span> 
+    </div>
+    
+  </body>
+</html>
