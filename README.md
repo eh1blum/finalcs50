@@ -2,7 +2,7 @@
 # README
 
 1. Download finalcs50 folder including manifest.json, content.js, popup.js, popup.html, bias_array.js, bias_text.txt, conservative_array.js, conservative_text.txt, icon.png, liberal_array.js, and liberal_text.txt.
-2. Run Chrome and enter chrome://extensions into URL 
+2. Run Chrome and enter chrome://extensions into URL and designate "Developer Mode".
 3. Click "Load unpacked extension..." and select finalcs50 folder as directory to load. The Bias Metrics extension icon will appear beside URL bar, it is a circle made up of competing blue and red strokes. 
 4. Search and open any article using Google Chrome.
 5. Wait until article loads completely, and then click the Bias Metrics icon.
