@@ -1,6 +1,6 @@
-console.log("hi");
+// helper function //
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-	console.log("before if");
+	// receive activation message from popup.js and respond with data from webpage
 	if(request.action == "Activate"){
 		console.log("message receieved");
 
